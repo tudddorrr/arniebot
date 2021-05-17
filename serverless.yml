@@ -1,0 +1,14 @@
+service: alarmbot
+frameworkVersion: '2'
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+
+functions:
+  alarm:
+    handler: handler.alarm
+    events:
+      - schedule: cron(0 2 * * ? *)

@@ -1,0 +1,13 @@
+{
+  "name": "alarmbot",
+  "version": "1.0.0",
+  "main": "handler.js",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv": "^9.0.2"
+  },
+  "devDependencies": {
+    "serverless": "^2.41.2"
+  }
+}
