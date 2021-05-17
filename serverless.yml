@@ -11,4 +11,4 @@ functions:
   alarm:
     handler: handler.alarm
     events:
-      - schedule: cron(0 2 * * ? *)
+      - schedule: cron(48 1 * * ? *)
