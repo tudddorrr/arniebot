@@ -4,10 +4,15 @@
   "main": "handler.js",
   "license": "MIT",
   "dependencies": {
+    "casual": "^1.6.2",
     "discord.js": "^12.5.3",
-    "dotenv": "^9.0.2"
+    "dotenv": "^9.0.2",
+    "node-schedule": "^2.0.0"
   },
   "devDependencies": {
-    "serverless": "^2.41.2"
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "dev": "nodemon index.js"
   }
 }
