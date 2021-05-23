@@ -89,12 +89,16 @@ const main = async () => {
           msg.react(casual.random_element(emoji))
           break
         case 'why':
+        case 'y':
           replies = ['cause we gotta get shit done', 'cause you asked to be spammed to do work', 'you know why', 'cause there\'s stuff that needs doing', 'why not', 'we got shit to do', 'why!? you know why', 'yeah yeah get on with it']
           msg.reply(casual.random_element(replies))
           break
         case 'give me some work':
         case 'gimme work':
+        case 'gimme some work':
         case 'what needs doing':
+        case 'i need work':
+        case 'any work?':
           sendWork(msg.author, true)
 
           emoji = ['😮', '❗', '🎉', '😍', '⭐', '🙌']
