@@ -8,10 +8,12 @@ const schedule = require('node-schedule')
 let work = []
 
 const sendWork = (user, instant) => {
-  setTimeout(() => {
-    console.log('[info] sending work')
+  const delay = instant ? 0 : casual.integer(0, process.env.MAX_DELAY_MINS * 60000)
+  console.log(`[info] sending work in ${(delay / 60000).toFixed(2)} mins`)
 
+  setTimeout(() => {
     if (work.length === 0) {
+      console.log('[info] no work set')
       user.send('apparently there\'s no work that needs doing. give me some to give you using !setwork work1, work2, etc')
       return
     }
@@ -20,7 +22,9 @@ const sendWork = (user, instant) => {
     const workIntro = ['here\'s what needs doing', 'this is the work that needs doing', 'stuff that still needs ticking off']
 
     user.send(`${casual.random_element(greetings)}. ${casual.random_element(workIntro)}: ${work.join(', ')}`)
-  }, instant ? 0 : casual.integer(0, process.env.MAX_DELAY_MINS * 60000))
+
+    console.log('[info] work sent')
+  }, delay)
 }
 
 const main = async () => {
