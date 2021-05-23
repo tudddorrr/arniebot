@@ -9,7 +9,7 @@ let work = []
 
 const sendWork = (user, instant) => {
   setTimeout(() => {
-    console.log('[INFO] sending work')
+    console.log('[info] sending work')
 
     if (work.length === 0) {
       user.send('apparently there\'s no work that needs doing. give me some to give you using !setwork work1, work2, etc')
@@ -35,7 +35,7 @@ const main = async () => {
       sendWork(user)
     })
 
-    console.log(`[INFO] bot ready, using schedule: '${process.env.SCHEDULE}' and max delay mins: ${process.env.MAX_DELAY_MINS}`)
+    console.log(`[info] bot ready, using schedule: '${process.env.SCHEDULE}' and max delay mins: ${process.env.MAX_DELAY_MINS}`)
 
     user.send('hey, i need some work to give you. reply with !setwork work1, work2, etc')
   })
@@ -43,7 +43,7 @@ const main = async () => {
   client.on('message', (msg) => {
     if (msg.author.bot) return
 
-    console.log(`[INFO] incoming message: ${msg.content}`)
+    console.log(`[info] incoming message: ${msg.content}`)
 
     if (msg.content.startsWith('!')) {
       const splitMsg = msg.content.split(' ')
@@ -52,11 +52,14 @@ const main = async () => {
 
       switch (splitMsg[0]) {
         case '!setwork':
-          work = args.replaceAll(' ', '').split(',')
+          const tempWork = args?.split(',').map((w) => w.trim())
 
-          if (!work || work.length === 0) {
+          if (!tempWork || tempWork.length === 0) {
             msg.reply('there\'s no work there. give me work in a comma separated list')
           } else {
+            work = tempWork
+            console.log(`[info] work set to: ${work.join(', ')}`)
+
             msg.reply(`okay so the current work is now: ${work.join(', ')}`)
             msg.react('✅')
           }
