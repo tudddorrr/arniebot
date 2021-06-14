@@ -6,6 +6,22 @@ const casual = require('casual')
 const schedule = require('node-schedule')
 
 let work = []
+let acknowledged = false
+let acknowledgeTimeout = -1
+
+const scheduleAcknowledgeCheck = (user) => {
+  const delay = casual.integer(300000, 1800000) // between 5 mins and 30 mins
+  console.log(`[info] sending acknowledgement in ${(delay / 60000).toFixed(2)} mins`)
+
+  acknowledgeTimeout = setTimeout(() => {
+    console.log('[info] acknowledgement check sent')
+
+    const messages = ['oi acknowledge me', 'acknowledge me', 'hey did you see that message', 'got it?', 'okay?', 'hello?', 'hey, listen. get the work done', 'notice me. notice the work. do the work.']
+    user.send(casual.random_element(messages))
+
+    scheduleAcknowledgeCheck(user)
+  }, delay)
+}
 
 const sendWork = (user, instant) => {
   const delay = instant ? 0 : casual.integer(0, process.env.MAX_DELAY_MINS * 60000)
@@ -22,6 +38,9 @@ const sendWork = (user, instant) => {
     const workIntro = ['here\'s what needs doing', 'this is the work that needs doing', 'stuff that still needs ticking off']
 
     user.send(`${casual.random_element(greetings)}. ${casual.random_element(workIntro)}: ${work.join(', ')}`)
+
+    acknowledged = false
+    scheduleAcknowledgeCheck(user)
 
     console.log('[info] work sent')
   }, delay)
@@ -75,6 +94,9 @@ const main = async () => {
     } else {
       let replies = []
       let emoji = []
+
+      acknowledged = true
+      clearTimeout(acknowledgeTimeout)
 
       switch (msg.content.toLowerCase()) {
         case 'yeah':
